@@ -1,6 +1,14 @@
 Version 8.15 (Unreleased)
 -------------------------
 
+Schema Changes
+~~~~~~~~~~~~~~
+- Added ``Deploy`` model
+
+API Changes
+~~~~~~~~~~~
+- Added ReleaseDeploysEndpoint
+
 Version 8.14
 ------------
 
@@ -32,7 +40,6 @@ API Changes
 - Split out filtered stats onto Inbound Data Filters page
 - Added OrganizationReleasesEndpoint
 - Added OrganizationReleaseFileEndpoint
-- Added ReleaseDeploysEndpoint
 
 Schema Changes
 ~~~~~~~~~~~~~~
@@ -45,7 +52,6 @@ Schema Changes
 - Added ``Project.flags`` column.
 - Added not null constraint to ``Environment.organization_id`` column.
 - Removed not null constraint on ``Environment.project_id`` and ``ReleaseEnvironment.project_id`` columns
-- Added ``Deploy`` model
 
 Version 8.13
 ------------
