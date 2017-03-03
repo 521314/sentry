@@ -15,6 +15,7 @@ from django.db.models import get_model
 from sentry.constants import ObjectStatus
 from sentry.exceptions import DeleteAborted
 from sentry.signals import pending_delete
+from sentry.similarity import features
 from sentry.tasks.base import instrumented_task, retry
 from sentry.utils.query import bulk_delete_objects
 
@@ -258,6 +259,8 @@ def delete_group(object_id, transaction_id=None, continuous=True, **kwargs):
                 kwargs={'object_id': object_id, 'transaction_id': transaction_id},
             )
         return
+
+    features.delete(group)
     g_id = group.id
     group.delete()
     logger.info('object.delete.queued', extra={

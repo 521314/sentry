@@ -324,6 +324,12 @@ class FeatureSet(object):
             reverse=True,
         )
 
+    def merge(self, destination, sources):
+        raise NotImplementedError
+
+    def delete(self, group):
+        raise NotImplementedError
+
 
 def serialize_text_shingle(value, separator=b''):
     """\
