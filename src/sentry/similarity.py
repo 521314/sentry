@@ -325,10 +325,30 @@ class FeatureSet(object):
         )
 
     def merge(self, destination, sources):
-        raise NotImplementedError
+        assert len(
+            set([destination.project_id]) |
+            set([source.project_id for source in sources])
+        ) == 1, 'all groups must belong to same project'
+        aliases = [self.aliases[label] for label in self.features.keys()]
+        return self.index.merge(
+            '{}'.format(destination.project_id),
+            '{}'.format(destination.id),
+            reduce(
+                lambda items, chunk: items.extend(chunk) or items,
+                [
+                    [(alias, '{}'.format(source.id)) for alias in aliases]
+                    for source in sources
+                ],
+                [],
+            )
+        )
 
     def delete(self, group):
-        raise NotImplementedError
+        key = '{}'.format(group.id)
+        return self.index.delete(
+            '{}'.format(group.project_id),
+            [(self.aliases[label], key) for label in self.features.keys()],
+        )
 
 
 def serialize_text_shingle(value, separator=b''):
